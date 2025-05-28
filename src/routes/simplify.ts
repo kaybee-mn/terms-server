@@ -1,7 +1,5 @@
 import express from 'express';
 import verifyJWT from '../middleware/verifyJWT';
-import openai from '../config/openaiConfig';
-
 const router = express.Router();
 
 router.post('/', verifyJWT, async (req:express.Request, res:express.Response) => {
