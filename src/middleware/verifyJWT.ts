@@ -12,7 +12,7 @@ const verifyJWT=(req: Request, res: Response, next: NextFunction):void => {
   const token = authHeader?.split(' ')[1];
 
   try {
-    const secret = process.env.SUPABASE_JWT_SECRET;
+    const secret = process.env.JWT_SECRET;
     if(!secret){
       throw new Error('JWT secret is not defined');
     }
