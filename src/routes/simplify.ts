@@ -23,6 +23,8 @@ router.post(
         .filter(Boolean)
         .map((sentence: String) => `• ${sentence}`)
         .join("\n");
+
+        // res.json({simplified:"12345d"+ simplified});
       const response = await openai.chat.completions.create({
         model: "gpt-4-turbo",
         messages: [
