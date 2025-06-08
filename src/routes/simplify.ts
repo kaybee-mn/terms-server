@@ -1,25 +1,8 @@
 import express from "express";
 import verifyJWT from "../middleware/verifyJWT";
-import openai from "../config/openaiConfig";
-import { supabaseAdmin } from "../config/supabaseAdmin";
 
 const router = express.Router();
 
-router.post(
-  "/save",
-  verifyJWT,
-  async (req:express.Request, res:express.Response)=>{
-    const {id,title,content}=req.body;
-    try{
-      await supabaseAdmin.from('Simplifications').insert([{id, title, content}])
-    } catch (error) {
-      console.error("Save error:", error);
-      res
-        .status(500)
-        .json({ error: "An error occurred while saving the text." });
-    }
-  }
-)
 
 router.post(
   "/",
