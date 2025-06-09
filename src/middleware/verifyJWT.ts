@@ -17,11 +17,14 @@ const verifyJWT=(req: Request, res: Response, next: NextFunction):void => {
     if(!secret){
       throw new Error('JWT secret is not defined');
     }
-    const payload = jwt.verify(token, secret);
-    req.user.id = (payload as JwtUserPayload).user_metadata.sub;
+    const payload = (jwt.verify(token, secret)  as JwtUserPayload);
+    // make sure user is initialized
+    req.user = req.user || {};
+    // pass the user id
+    req.user.id = payload.user_metadata.sub;
     next();
   } catch (err) {
-    res.status(403).json({ error: 'Invalid token' });
+    res.status(403).json({ error: 'Invalid token', err });
   }
 }
 
