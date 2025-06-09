@@ -1,5 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
+import {Response,Request, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { JwtUserPayload } from '../types/jwt';
 
 const verifyJWT=(req: Request, res: Response, next: NextFunction):void => {
   const authHeader = req.headers.authorization;
@@ -17,7 +18,7 @@ const verifyJWT=(req: Request, res: Response, next: NextFunction):void => {
       throw new Error('JWT secret is not defined');
     }
     const payload = jwt.verify(token, secret);
-    (req as any).user = payload;
+    req.user.id = (payload as JwtUserPayload).user_metadata.sub;
     next();
   } catch (err) {
     res.status(403).json({ error: 'Invalid token' });
