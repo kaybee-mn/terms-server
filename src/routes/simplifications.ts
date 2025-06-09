@@ -10,6 +10,7 @@ router.post(
   async (req:express.Request, res:express.Response)=>{
     const {user_id,title,content}=req.body;
     try{
+
       await supabaseAdmin.from('Simplifications').insert([{user_id, title, content}]);
     } catch (error) {
       console.error("Save error:", error);
@@ -18,6 +19,21 @@ router.post(
         .json({ error: "An error occurred while saving the text." });
     }
     res.json({success:true})
+  }
+)
+
+router.get(
+  "/titles",
+  verifyJWT,
+  async(req:express.Request,res:express.Response)=>{
+    const {user_id} = req.body;
+    try{
+    const result = await supabaseAdmin.from("Documents").select("title").eq('user_id',user_id);
+    console.log(result);
+    res.json({titles:result.data})
+    }catch(error){
+      res.status(500).json({error:"An error occurred while retrieving title list."})
+    }
   }
 )
 
