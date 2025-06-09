@@ -80,7 +80,7 @@ router.get(
       const result = await supabaseAdmin
         .from("Simplifications")
         .select()
-        .eq("table_id", req.params.table_id);
+        .eq("title_id", req.params.title_id);
       res.json(result);
     } catch (error) {
       res
