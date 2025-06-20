@@ -61,7 +61,7 @@ router.get(
     try {
       const result = await supabaseAdmin
         .from("Documents")
-        .select("title")
+        .select()
         .eq("user_id", user_id);
       res.json(result);
     } catch (error) {
